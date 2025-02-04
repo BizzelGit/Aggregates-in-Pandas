@@ -1,0 +1,56 @@
+import codecademylib3
+import numpy as np
+import pandas as pd
+
+orders = pd.read_csv('orders.csv')
+
+cheap_shoes = orders.groupby('shoe_color').price.apply(lambda x: np.percentile(x, 25)).reset_index()
+
+print(cheap_shoes)
+
+_____
+
+
+Genau! 😊
+
+Lass mich das nochmal genauer erklären:
+
+Was macht np.percentile(x, 25) wirklich?
+np.percentile(x, 25) gibt nur einen einzelnen Wert zurück – den sogenannten 25. Perzentil-Wert.
+Dieser Wert ist die Grenze, unter der 25% der Werte in der jeweiligen Gruppe liegen.
+Es gibt nicht alle Preise in den unteren 25% zurück, sondern nur den Schwellenwert, der diese Gruppe begrenzt.
+Ein Beispiel zur Veranschaulichung
+Angenommen, wir haben folgende Preise für die Schuhfarbe "rot":
+
+python
+Kopieren
+Bearbeiten
+[30, 40, 50, 60, 70, 80, 90, 100]
+Jetzt berechnen wir das 25. Perzentil mit np.percentile(x, 25):
+
+python
+Kopieren
+Bearbeiten
+np.percentile([30, 40, 50, 60, 70, 80, 90, 100], 25)
+Das ergibt:
+
+python
+Kopieren
+Bearbeiten
+47.5
+Was bedeutet das?
+
+25% der Preise (also die günstigsten 25%) liegen unter 47.5.
+Der Wert 47.5 ist der Schwellenwert – er markiert, wo die untersten 25% enden.
+Warum gibt der Code nur einen Wert zurück?
+Weil np.percentile(x, 25) eine einzige Zahl berechnet – den Grenzwert für das untere Viertel.
+Es werden nicht alle Werte unterhalb dieses Grenzwerts zurückgegeben, sondern nur der Schwellenwert.
+Wenn du stattdessen ALLE Werte unterhalb des 25. Perzentils haben möchtest, kannst du das so machen:
+
+python
+Kopieren
+Bearbeiten
+orders.groupby('shoe_color').price.apply(lambda x: x[x <= np.percentile(x, 25)])
+Das filtert alle Preise, die unter oder gleich dem 25. Perzentil sind.
+
+Hoffe, das macht es klarer! 😊
