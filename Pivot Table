@@ -1,0 +1,24 @@
+import codecademylib3
+import numpy as np
+import pandas as pd
+
+orders = pd.read_csv('orders.csv')
+
+shoe_counts = orders.groupby(['shoe_type', 'shoe_color']).id.count().reset_index()
+
+shoe_counts_pivot = shoe_counts.pivot(
+                      columns='shoe_color',
+                      index='shoe_type',
+                      values='id').reset_index()
+
+print(shoe_counts_pivot)
+
+
+
+______
+
+	shoe_type	black	brown	navy	red	white
+0	ballet flats	2.0	11.0	17.0	13.0	7.0
+1	sandals	3.0	10.0	13.0	14.0	10.0
+2	stilettos	8.0	14.0	7.0	16.0	5.0
+3	wedges	nan	13.0	16.0	4.0	17.0
